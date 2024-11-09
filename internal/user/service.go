@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/darkphotonKN/ecommerce-server-go/internal/models"
+	"github.com/darkphotonKN/online-trade/internal/models"
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )

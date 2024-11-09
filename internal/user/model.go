@@ -1,6 +1,6 @@
 package user
 
-import "github.com/darkphotonKN/ecommerce-server-go/internal/models"
+import "github.com/darkphotonKN/online-trade/internal/models"
 
 type UserResponse struct {
 	models.BaseDBDateModel

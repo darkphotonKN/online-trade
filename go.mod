@@ -1,4 +1,4 @@
-module github.com/darkphotonKN/ecommerce-server-go
+module github.com/darkphotonKN/online-trade
 
 go 1.22.3
 

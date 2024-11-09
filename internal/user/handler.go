@@ -4,18 +4,21 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/darkphotonKN/ecommerce-server-go/internal/models"
+	"github.com/darkphotonKN/online-trade/internal/models"
+	"github.com/darkphotonKN/online-trade/internal/rating"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
 
 type UserHandler struct {
-	Service *UserService
+	Service       *UserService
+	RatingService *rating.RatingService
 }
 
-func NewUserHandler(service *UserService) *UserHandler {
+func NewUserHandler(service *UserService, ratingService *rating.RatingService) *UserHandler {
 	return &UserHandler{
-		Service: service,
+		Service:       service,
+		RatingService: ratingService,
 	}
 }
 

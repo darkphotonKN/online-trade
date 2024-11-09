@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/darkphotonKN/ecommerce-server-go/config"
+	"github.com/darkphotonKN/online-trade/config"
 	"github.com/joho/godotenv"
 )
 

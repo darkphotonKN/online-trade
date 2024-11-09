@@ -20,7 +20,6 @@ var DB *sqlx.DB
 * the entire application.
 **/
 func InitDB() *sqlx.DB {
-
 	// construct the db connection string
 	dsn := fmt.Sprintf(
 		"postgres://%s:%s@%s:%s/%s?sslmode=disable",

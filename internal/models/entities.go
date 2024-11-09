@@ -16,15 +16,20 @@ type User struct {
 }
 
 type Rating struct {
-	ID        uuid.UUID `db:"id" json:"id"`
-	UserID    uuid.UUID `db:"user_id" json:"userId"`
-	Rating    int       `db:"rating" json:"rating"`
-	CreatedAt time.Time `db:"created_at" json:"createdAt"`
+	BaseIDUserModel
+	UserID uuid.UUID `db:"user_id" json:"userId"`
+	Rating int       `db:"rating" json:"rating"`
 }
 
 /**
 * Base models for default table columns.
 **/
+
+type BaseIDUserModel struct {
+	ID        uuid.UUID `db:"id" json:"id"`
+	CreatedAt time.Time `db:"created_at" json:"createdAt"`
+}
+
 type BaseDBUserModel struct {
 	ID          uuid.UUID `db:"id" json:"id"`
 	UpdatedUser uuid.UUID `db:"updated_user" json:"updatedUser"`

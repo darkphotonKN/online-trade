@@ -3,7 +3,7 @@ package rating
 import (
 	"fmt"
 
-	"github.com/darkphotonKN/ecommerce-server-go/internal/models"
+	"github.com/darkphotonKN/online-trade/internal/models"
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 )
@@ -19,7 +19,6 @@ func NewRatingRepository(db *sqlx.DB) *RatingRepository {
 }
 
 func (r *RatingRepository) CreateRating(userId uuid.UUID, ratingReq RatingRequest) error {
-
 	// add a new rating under this product's id
 	query := `
 	INSERT INTO ratings (user_id, rating)
@@ -42,7 +41,6 @@ func (r *RatingRepository) CreateRating(userId uuid.UUID, ratingReq RatingReques
 }
 
 func (r *RatingRepository) GetAllRatingsByUserId(userId uuid.UUID) (*[]models.Rating, error) {
-
 	var ratings []models.Rating
 
 	query := `
