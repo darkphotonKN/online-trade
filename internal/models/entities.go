@@ -20,6 +20,7 @@ type Rating struct {
 	UserID uuid.UUID `db:"user_id" json:"userId"`
 	Rating int       `db:"rating" json:"rating"`
 }
+
 type Item struct {
 	BaseDBDateModel
 	UserID        uuid.UUID `db:"user_id" json:"userId"`               // Links to User who listed the item
