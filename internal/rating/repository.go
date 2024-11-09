@@ -19,6 +19,7 @@ func NewRatingRepository(db *sqlx.DB) *RatingRepository {
 }
 
 func (r *RatingRepository) CreateRating(userId uuid.UUID, ratingReq RatingRequest) error {
+
 	// add a new rating under this product's id
 	query := `
 	INSERT INTO ratings (user_id, rating)
