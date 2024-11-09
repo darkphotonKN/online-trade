@@ -12,29 +12,10 @@ CREATE TABLE IF NOT EXISTS items (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
--- automtically updating "updated_at" for items with trigger
-
-CREATE OR REPLACE FUNCTION update_item_timestamp()
-RETURNS TRIGGER AS $$
-BEGIN
-    NEW.updated_at = NOW();
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER set_item_timestamp
-BEFORE UPDATE ON items
-FOR EACH ROW
-EXECUTE FUNCTION update_item_timestamp();
-
 -- +goose StatementEnd
 
 -- +goose Down
 -- +goose StatementBegin
-DROP TRIGGER IF EXISTS set_item_timestamp ON items;
-DROP FUNCTION IF EXISTS update_item_timestamp();
-
 DROP TABLE IF EXISTS items;
 -- +goose StatementEnd
 
