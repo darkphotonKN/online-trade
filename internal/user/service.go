@@ -56,6 +56,8 @@ func (s *UserService) LoginUserService(loginReq UserLoginRequest) (*UserLoginRes
 	refreshExpiryTime := time.Hour * 24 * 7
 	refreshToken, err := auth.GenerateJWT(*user, auth.Refresh, refreshExpiryTime)
 
+	user.Password = ""
+
 	res := &UserLoginResponse{
 		AccessToken:      accessToken,
 		AccessExpiresIn:  int(accessExpiryTime),
