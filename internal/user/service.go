@@ -3,7 +3,9 @@ package user
 import (
 	"errors"
 	"fmt"
+	"time"
 
+	"github.com/darkphotonKN/online-trade/internal/auth"
 	"github.com/darkphotonKN/online-trade/internal/models"
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
@@ -24,7 +26,6 @@ func (s *UserService) GetUserByIdService(id uuid.UUID) (*models.User, error) {
 }
 
 func (s *UserService) CreateUserService(user models.User) error {
-
 	hashedPw, err := s.HashPassword(user.Password)
 
 	if err != nil {
@@ -37,8 +38,7 @@ func (s *UserService) CreateUserService(user models.User) error {
 	return s.Repo.Create(user)
 }
 
-func (s *UserService) LoginUserService(loginReq UserLoginRequest) (*models.User, error) {
-
+func (s *UserService) LoginUserService(loginReq UserLoginRequest) (*UserLoginResponse, error) {
 	user, err := s.Repo.GetUserByEmail(loginReq.Email)
 
 	if err != nil {
@@ -50,7 +50,21 @@ func (s *UserService) LoginUserService(loginReq UserLoginRequest) (*models.User,
 		return nil, errors.New("The credentials provided was incorrect.")
 	}
 
-	return user, nil
+	// construct response with both user info and auth credentials
+	accessExpiryTime := time.Minute * 60
+	accessToken, err := auth.GenerateJWT(*user, auth.Access, accessExpiryTime)
+	refreshExpiryTime := time.Hour * 24 * 7
+	refreshToken, err := auth.GenerateJWT(*user, auth.Refresh, refreshExpiryTime)
+
+	res := &UserLoginResponse{
+		AccessToken:      accessToken,
+		AccessExpiresIn:  int(accessExpiryTime),
+		RefreshToken:     refreshToken,
+		RefreshExpiresIn: int(refreshExpiryTime),
+		UserInfo:         user,
+	}
+
+	return res, nil
 }
 
 // HashPassword hashes the given password using bcrypt.

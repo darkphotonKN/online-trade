@@ -96,7 +96,7 @@ CREATE TABLE public.users (
     email text NOT NULL,
     password text NOT NULL,
     average_rating numeric(2,1) DEFAULT 0,
-    response_time interval,
+    response_time integer DEFAULT 0,
     total_trades integer DEFAULT 0,
     CONSTRAINT users_average_rating_check CHECK (((average_rating >= (0)::numeric) AND (average_rating <= (5)::numeric)))
 );

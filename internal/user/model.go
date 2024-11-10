@@ -10,5 +10,18 @@ type UserResponse struct {
 
 type UserLoginRequest struct {
 	Email    string `db:"email" json:"email"`
-	Password string `db:"password" json: "password"`
+	Password string `db:"password" json:"password"`
+}
+
+type UserLoginResponse struct {
+	RefreshToken     string `json:"refreshToken"`
+	AccessToken      string `json:"accessToken"`
+	AccessExpiresIn  int    `json:"accessExpiresIn"`
+	RefreshExpiresIn int    `json:"refreshExpiresIn"`
+
+	UserInfo *models.User `json:"userInfo"`
+}
+
+type RefreshTokenRequest struct {
+	RefreshToken string `json:"refreshToken"`
 }
