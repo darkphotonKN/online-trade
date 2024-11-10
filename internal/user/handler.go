@@ -58,6 +58,7 @@ func (h *UserHandler) LoginUserHandler(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"statusCode": http.StatusOK, "message": "Successfully logged in.",
+		// TODO : Add jwt tokens.
 		// de-reference to return the user struct, not pointer
 		"result": user})
 }
@@ -85,5 +86,16 @@ func (h *UserHandler) GetUserByIdHandler(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"statusCode": http.StatusOK, "message": "Successfully retreived user.",
 		"result": user})
+}
+
+func (r *UserRepository) RefreshTokenHandler(c *gin.Context) {
+	var refreshTokenReq RefreshTokenRequest
+
+	err := c.ShouldBindJSON(&refreshTokenReq)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"statusCode": http.StatusBadRequest, "message": fmt.Sprintf("Error with parsing payload as JSON.")})
+		return
+	}
 
 }

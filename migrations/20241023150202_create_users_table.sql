@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS users (
 
     -- Trade Specific --
     average_rating DECIMAL(2, 1) DEFAULT 0 CHECK (average_rating >= 0 AND average_rating <= 5),
-    response_time INTERVAL,  -- Optional: average time to respond, could be set in hours or days
+    response_time INT DEFAULT 0,  -- Response time in seconds
     total_trades INT DEFAULT 0  -- Tracks the number of items traded or posted
 );
 -- +goose StatementEnd

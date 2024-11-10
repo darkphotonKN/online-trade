@@ -10,9 +10,12 @@ import (
 **/
 type User struct {
 	BaseDBDateModel
-	Email    string `db:"email" json:"email"`
-	Name     string `db:"name" json:"name"`
-	Password string `db:"password" json:"password,omitempty"`
+	Email         string  `db:"email" json:"email"`
+	Name          string  `db:"name" json:"name"`
+	Password      string  `db:"password" json:"password,omitempty"`
+	AverageRating float64 `db:"average_rating"`
+	ResponseTime  int     `db:"response_time"`
+	TotalTrades   int     `db:"total_trades"`
 }
 
 type Rating struct {
