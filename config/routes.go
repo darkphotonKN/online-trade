@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/darkphotonKN/online-trade/internal/auth"
 	"github.com/darkphotonKN/online-trade/internal/item"
 	"github.com/darkphotonKN/online-trade/internal/rating"
 	"github.com/darkphotonKN/online-trade/internal/user"
@@ -44,8 +45,10 @@ func SetupRouter() *gin.Engine {
 
 	// --- Item Routes ---
 	itemRoutes := api.Group("/item")
+	// protected routes with auth middleware
+	itemRoutes.Use(auth.AuthMiddleware())
 	itemRoutes.GET("/", itemHandler.GetItemsHandler)
-	itemRoutes.POST("/:userId", itemHandler.CreateItemHandler)
+	itemRoutes.POST("/", itemHandler.CreateItemHandler)
 
 	return router
 }

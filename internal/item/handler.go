@@ -20,14 +20,7 @@ func NewItemHandler(service *ItemService) *ItemHandler {
 }
 
 func (h *ItemHandler) CreateItemHandler(c *gin.Context) {
-	// TODO: get user id from token instead
-	tempUserId := c.Param("userId")
-	id, err := uuid.Parse(tempUserId)
-
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"statusCode": http.StatusBadRequest, "message": fmt.Sprintf("Error when attempging to parse userID: %s", err)})
-		return
-	}
+	userId, _ := c.Get("userId")
 
 	var item models.Item
 
@@ -36,7 +29,7 @@ func (h *ItemHandler) CreateItemHandler(c *gin.Context) {
 		return
 	}
 
-	err = h.Service.CreateItemService(id, item)
+	err := h.Service.CreateItemService(userId.(uuid.UUID), item)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"statusCode": http.StatusInternalServerError, "message": fmt.Sprintf("Error when attempting to create item: %s", err.Error())})
@@ -47,14 +40,12 @@ func (h *ItemHandler) CreateItemHandler(c *gin.Context) {
 }
 
 func (h *ItemHandler) GetItemsHandler(c *gin.Context) {
-	// TODO: get user id from token instead
-	tempUserId := c.Param("userId")
-	id, _ := uuid.Parse(tempUserId)
+	userId, _ := c.Get("userId")
 
-	items, err := h.Service.GetItemsService(id)
+	items, err := h.Service.GetItemsService(userId.(uuid.UUID))
 
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"statusCode": http.StatusBadRequest, "message": fmt.Sprintf("Error when attempting to retrieve all items from user id: %s, \n error: %s\n", id, err.Error())})
+		c.JSON(http.StatusBadRequest, gin.H{"statusCode": http.StatusBadRequest, "message": fmt.Sprintf("Error when attempting to retrieve all items from user id: %s, \n error: %s\n", userId, err.Error())})
 		return
 	}
 

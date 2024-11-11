@@ -50,7 +50,7 @@ func (h *UserHandler) LoginUserHandler(c *gin.Context) {
 		return
 	}
 
-	user, err := h.Service.LoginUserService(loginReq)
+	userLoginRes, err := h.Service.LoginUserService(loginReq)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"statusCode": http.StatusBadRequest, "message": fmt.Sprintf("Error when attempting to login user: %s\n", err)})
@@ -58,9 +58,7 @@ func (h *UserHandler) LoginUserHandler(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"statusCode": http.StatusOK, "message": "Successfully logged in.",
-		// TODO : Add jwt tokens.
-		// de-reference to return the user struct, not pointer
-		"result": user})
+		"result": userLoginRes})
 }
 
 func (h *UserHandler) GetUserByIdHandler(c *gin.Context) {
