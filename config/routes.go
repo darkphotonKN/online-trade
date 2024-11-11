@@ -45,10 +45,11 @@ func SetupRouter() *gin.Engine {
 
 	// --- Item Routes ---
 	itemRoutes := api.Group("/item")
-	// protected routes with auth middleware
+	// Protected Routes
 	itemRoutes.Use(auth.AuthMiddleware())
 	itemRoutes.GET("/", itemHandler.GetItemsHandler)
 	itemRoutes.POST("/", itemHandler.CreateItemHandler)
+	itemRoutes.PATCH("/:id", itemHandler.UpdateItemsHandler)
 
 	return router
 }

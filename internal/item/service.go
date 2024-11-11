@@ -31,3 +31,7 @@ func (s *ItemService) CreateItemService(userId uuid.UUID, item models.Item) erro
 func (s *ItemService) GetItemsService(userId uuid.UUID) (*[]models.Item, error) {
 	return s.Repo.GetItems(userId)
 }
+
+func (s *ItemService) UpdateItemsService(userId uuid.UUID, id uuid.UUID, updateItemReq UpdateItemReq) (*models.Item, error) {
+	return s.Repo.UpdateItemById(userId, id, updateItemReq)
+}
