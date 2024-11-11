@@ -1,6 +1,8 @@
 package item
 
 import (
+	"fmt"
+
 	"github.com/darkphotonKN/online-trade/internal/models"
 	"github.com/google/uuid"
 )
@@ -16,6 +18,7 @@ func NewItemService(repo *ItemRepository) *ItemService {
 }
 
 func (s *ItemService) CreateItemService(userId uuid.UUID, item models.Item) error {
+	fmt.Println("Creating item with userID:", userId)
 	// creating item for a specific user
 	item.UserID = userId
 
@@ -23,4 +26,8 @@ func (s *ItemService) CreateItemService(userId uuid.UUID, item models.Item) erro
 	newProdId := uuid.New()
 	item.ProductID = newProdId
 	return s.Repo.CreateItem(item)
+}
+
+func (s *ItemService) GetItemsService(userId uuid.UUID) (*[]models.Item, error) {
+	return s.Repo.GetItems(userId)
 }

@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/darkphotonKN/online-trade/internal/item"
 	"github.com/darkphotonKN/online-trade/internal/rating"
 	"github.com/darkphotonKN/online-trade/internal/user"
 	"github.com/gin-gonic/gin"
@@ -33,6 +34,18 @@ func SetupRouter() *gin.Engine {
 	userRoutes.GET("/:id", userHandler.GetUserByIdHandler)
 	userRoutes.POST("/signup", userHandler.CreateUserHandler)
 	userRoutes.POST("/signin", userHandler.LoginUserHandler)
+
+	// -- ITEM --
+
+	// --- Item Setup ---
+	itemRepo := item.NewItemRepository(DB)
+	itemService := item.NewItemService(itemRepo)
+	itemHandler := item.NewItemHandler(itemService)
+
+	// --- Item Routes ---
+	itemRoutes := api.Group("/item")
+	itemRoutes.GET("/", itemHandler.GetItemsHandler)
+	itemRoutes.POST("/:userId", itemHandler.CreateItemHandler)
 
 	return router
 }
