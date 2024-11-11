@@ -1,6 +1,8 @@
 package item
 
 import (
+	"database/sql"
+
 	"github.com/darkphotonKN/online-trade/internal/models"
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
@@ -36,7 +38,7 @@ func (r *ItemRepository) GetItems(userId uuid.UUID) (*[]models.Item, error) {
 
 	query := `
 	SELECT * FROM items
-	WHERE items.user_id = $1
+	WHERE user_id = $1
 	`
 
 	err := r.DB.Select(&items, query, userId)
@@ -46,4 +48,49 @@ func (r *ItemRepository) GetItems(userId uuid.UUID) (*[]models.Item, error) {
 	}
 
 	return &items, nil
+}
+
+func (r *ItemRepository) UpdateItemById(userId uuid.UUID, id uuid.UUID, updateItemReq UpdateItemReq) (*models.Item, error) {
+	var item models.Item
+
+	query := `
+	UPDATE items
+	SET name = :name,
+		description = :description,
+		price_per_unit = :price_per_unit,
+		stock_quantity = :stock_quantity
+	WHERE user_id = :user_id AND id = :id
+	RETURNING *;
+	`
+
+	params := map[string]interface{}{
+		"id":             id,
+		"user_id":        userId,
+		"name":           updateItemReq.Name,
+		"description":    updateItemReq.Description,
+		"price_per_unit": updateItemReq.PricePerUnit,
+		"stock_quantity": updateItemReq.StockQuantity,
+	}
+
+	rows, err := r.DB.NamedQuery(query, params)
+	defer rows.Close()
+
+	if err != nil {
+		return nil, err
+	}
+
+	// loop through and check next table row exists
+	if rows.Next() {
+		// map the row data to our item struct
+		err := rows.StructScan(&item)
+
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		// no results found
+		return nil, sql.ErrNoRows
+	}
+
+	return &item, nil
 }
