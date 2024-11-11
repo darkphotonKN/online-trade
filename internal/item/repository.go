@@ -2,6 +2,7 @@ package item
 
 import (
 	"github.com/darkphotonKN/online-trade/internal/models"
+	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -28,4 +29,21 @@ func (r *ItemRepository) CreateItem(item models.Item) error {
 	}
 
 	return nil
+}
+
+func (r *ItemRepository) GetItems(userId uuid.UUID) (*[]models.Item, error) {
+	var items []models.Item
+
+	query := `
+	SELECT * FROM items
+	WHERE items.user_id = $1
+	`
+
+	err := r.DB.Select(&items, query, userId)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &items, nil
 }

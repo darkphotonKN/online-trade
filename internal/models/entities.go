@@ -26,12 +26,12 @@ type Rating struct {
 
 type Item struct {
 	BaseDBDateModel
-	UserID        uuid.UUID `db:"user_id" json:"userId"`               // Links to User who listed the item
-	ProductID     uuid.UUID `db:"product_id" json:"productId"`         // Unique identifier for each product type
-	Name          string    `db:"name" json:"name"`                    // Name of the product
-	Description   string    `db:"description" json:"description"`      // Description of the product
-	PricePerUnit  float64   `db:"price_per_unit" json:"pricePerUnit"`  // Price for each unit
-	StockQuantity int       `db:"stock_quantity" json:"stockQuantity"` // Number of items available for sale
+	UserID        uuid.UUID `db:"user_id" json:"userId"`
+	ProductID     uuid.UUID `db:"product_id" json:"productId"`
+	Name          string    `db:"name" json:"name"`
+	Description   string    `db:"description" json:"description"`
+	PricePerUnit  float64   `db:"price_per_unit" json:"pricePerUnit"`
+	StockQuantity int       `db:"stock_quantity" json:"stockQuantity"`
 }
 
 /**
