@@ -52,7 +52,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		// Parse userId as UUID
 		userId, err := uuid.Parse(userIdStr)
 		if err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"statusCode": http.StatusUnauthorized, "error": "User ID was not correctly parsed as a uuid."})
+			c.JSON(http.StatusUnauthorized, gin.H{"statusCode": http.StatusUnauthorized, "error": "Member ID was not correctly parsed as a uuid."})
 			c.Abort()
 			return
 		}

@@ -8,11 +8,12 @@ import (
 /**
 * Shared entities that are imported by more than one package.
 **/
-type User struct {
+type Member struct {
 	BaseDBDateModel
 	Email         string  `db:"email" json:"email"`
 	Name          string  `db:"name" json:"name"`
 	Password      string  `db:"password" json:"password,omitempty"`
+	Status        string  `db:"status" json:"status"`
 	AverageRating float64 `db:"average_rating"`
 	ResponseTime  int     `db:"response_time"`
 	TotalTrades   int     `db:"total_trades"`
@@ -20,13 +21,13 @@ type User struct {
 
 type Rating struct {
 	BaseIDModel
-	UserID uuid.UUID `db:"user_id" json:"userId"`
-	Rating int       `db:"rating" json:"rating"`
+	MemberID uuid.UUID `db:"member_id" json:"memberId"`
+	Rating   int       `db:"rating" json:"rating"`
 }
 
 type Item struct {
 	BaseDBDateModel
-	UserID        uuid.UUID `db:"user_id" json:"userId"`
+	MemberID      uuid.UUID `db:"member_id" json:"memberId"`
 	ProductID     uuid.UUID `db:"product_id" json:"productId"`
 	Category      string    `db:"category" json:"category"`
 	Type          string    `db:"type" json:"type"`
@@ -45,10 +46,10 @@ type BaseIDModel struct {
 	CreatedAt time.Time `db:"created_at" json:"createdAt"`
 }
 
-type BaseDBUserModel struct {
-	ID          uuid.UUID `db:"id" json:"id"`
-	UpdatedUser uuid.UUID `db:"updated_user" json:"updatedUser"`
-	CreatedUser uuid.UUID `db:"created_user" json:"createdUser"`
+type BaseDBMemberModel struct {
+	ID            uuid.UUID `db:"id" json:"id"`
+	UpdatedMember uuid.UUID `db:"updated_member" json:"updatedMember"`
+	CreatedMember uuid.UUID `db:"created_member" json:"createdMember"`
 }
 
 type BaseDBDateModel struct {
@@ -57,10 +58,10 @@ type BaseDBDateModel struct {
 	UpdatedAt time.Time `db:"updated_at" json:"updated_at"`
 }
 
-type BaseDBUserDateModel struct {
-	ID          uuid.UUID `db:"id" json:"id"`
-	UpdatedUser uuid.UUID `db:"updated_user" json:"updatedUser"`
-	CreatedUser uuid.UUID `db:"created_user" json:"createdUser"`
-	CreatedAt   time.Time `db:"created_at" json:"created_at"`
-	UpdatedAt   time.Time `db:"updated_at" json:"updated_at"`
+type BaseDBMemberDateModel struct {
+	ID            uuid.UUID `db:"id" json:"id"`
+	UpdatedMember uuid.UUID `db:"updated_member" json:"updatedMember"`
+	CreatedMember uuid.UUID `db:"created_member" json:"createdMember"`
+	CreatedAt     time.Time `db:"created_at" json:"created_at"`
+	UpdatedAt     time.Time `db:"updated_at" json:"updated_at"`
 }
