@@ -56,6 +56,8 @@ func (r *ItemRepository) UpdateItemById(userId uuid.UUID, id uuid.UUID, updateIt
 	query := `
 	UPDATE items
 	SET name = :name,
+		category = :category,
+		type = :type,
 		description = :description,
 		price_per_unit = :price_per_unit,
 		stock_quantity = :stock_quantity
@@ -67,6 +69,8 @@ func (r *ItemRepository) UpdateItemById(userId uuid.UUID, id uuid.UUID, updateIt
 		"id":             id,
 		"user_id":        userId,
 		"name":           updateItemReq.Name,
+		"type":           updateItemReq.Type,
+		"category":       updateItemReq.Category,
 		"description":    updateItemReq.Description,
 		"price_per_unit": updateItemReq.PricePerUnit,
 		"stock_quantity": updateItemReq.StockQuantity,

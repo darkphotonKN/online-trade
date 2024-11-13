@@ -28,6 +28,8 @@ type Item struct {
 	BaseDBDateModel
 	UserID        uuid.UUID `db:"user_id" json:"userId"`
 	ProductID     uuid.UUID `db:"product_id" json:"productId"`
+	Category      string    `db:"category" json:"category"`
+	Type          string    `db:"type" json:"type"`
 	Name          string    `db:"name" json:"name"`
 	Description   string    `db:"description" json:"description"`
 	PricePerUnit  float64   `db:"price_per_unit" json:"pricePerUnit"`
