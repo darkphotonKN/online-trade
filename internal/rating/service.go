@@ -26,5 +26,5 @@ func (s *RatingService) PostRatingService(productId uuid.UUID, ratingReq RatingR
 * Gets all Ratings.
 **/
 func (s *RatingService) GetAllRatingsForProductService(userId uuid.UUID) (*[]models.Rating, error) {
-	return s.Repo.GetAllRatingsByUserId(userId)
+	return s.Repo.GetAllRatingsByMemberId(userId)
 }

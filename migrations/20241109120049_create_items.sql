@@ -3,7 +3,7 @@
 -- +goose StatementBegin
 CREATE TABLE IF NOT EXISTS items (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id UUID REFERENCES users(id) ON DELETE CASCADE, -- Links item to the user listing it
+    user_id UUID REFERENCES members(id) ON DELETE CASCADE, -- Links item to the member listing it
     item_id UUID NOT NULL,  -- Unique identifier for each item type
     name VARCHAR(255) NOT NULL,  -- Name of the item
     description TEXT,  -- Description of the item

@@ -17,10 +17,10 @@ func NewItemService(repo *ItemRepository) *ItemService {
 	}
 }
 
-func (s *ItemService) CreateItemService(userId uuid.UUID, item models.Item) error {
-	fmt.Println("Creating item with userID:", userId)
+func (s *ItemService) CreateItemService(memberId uuid.UUID, item models.Item) error {
+	fmt.Println("Creating item with memberId:", memberId)
 	// creating item for a specific user
-	item.UserID = userId
+	item.MemberID = memberId
 
 	// generate a new product id
 	newProdId := uuid.New()
@@ -28,10 +28,10 @@ func (s *ItemService) CreateItemService(userId uuid.UUID, item models.Item) erro
 	return s.Repo.CreateItem(item)
 }
 
-func (s *ItemService) GetItemsService(userId uuid.UUID) (*[]models.Item, error) {
-	return s.Repo.GetItems(userId)
+func (s *ItemService) GetItemsService(memberId uuid.UUID) (*[]models.Item, error) {
+	return s.Repo.GetItems(memberId)
 }
 
-func (s *ItemService) UpdateItemsService(userId uuid.UUID, id uuid.UUID, updateItemReq UpdateItemReq) (*models.Item, error) {
-	return s.Repo.UpdateItemById(userId, id, updateItemReq)
+func (s *ItemService) UpdateItemsService(memberId uuid.UUID, id uuid.UUID, updateItemReq UpdateItemReq) (*models.Item, error) {
+	return s.Repo.UpdateItemById(memberId, id, updateItemReq)
 }

@@ -18,18 +18,18 @@ func NewRatingRepository(db *sqlx.DB) *RatingRepository {
 	}
 }
 
-func (r *RatingRepository) CreateRating(userId uuid.UUID, ratingReq RatingRequest) error {
+func (r *RatingRepository) CreateRating(memberId uuid.UUID, ratingReq RatingRequest) error {
 
 	// add a new rating under this product's id
 	query := `
-	INSERT INTO ratings (user_id, rating)
-	VALUES (:user_id, :rating)
+	INSERT INTO ratings (member_id, rating)
+	VALUES (:member_id, :rating)
 	`
 
 	// temporary struct to hold values
 	params := map[string]interface{}{
-		"user_id": userId,
-		"rating":  ratingReq.Rating,
+		"member_id": memberId,
+		"rating":    ratingReq.Rating,
 	}
 
 	_, err := r.DB.NamedQuery(query, params)
@@ -41,15 +41,15 @@ func (r *RatingRepository) CreateRating(userId uuid.UUID, ratingReq RatingReques
 	return nil
 }
 
-func (r *RatingRepository) GetAllRatingsByUserId(userId uuid.UUID) (*[]models.Rating, error) {
+func (r *RatingRepository) GetAllRatingsByMemberId(memberId uuid.UUID) (*[]models.Rating, error) {
 	var ratings []models.Rating
 
 	query := `
 	SELECT * FROM ratings
-	WHERE ratings.user_id = $1
+	WHERE ratings.member_id = $1
 	`
 
-	err := r.DB.Select(&ratings, query, userId)
+	err := r.DB.Select(&ratings, query, memberId)
 
 	fmt.Println("ratings:", ratings)
 

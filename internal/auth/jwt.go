@@ -19,7 +19,7 @@ const (
 /**
 * Generates and signs a JWT token with claims of either the "access" or "refresh" types.
 **/
-func GenerateJWT(user models.User, tokenType TokenType, expiration time.Duration) (string, error) {
+func GenerateJWT(user models.Member, tokenType TokenType, expiration time.Duration) (string, error) {
 	JWTSecret := []byte(os.Getenv("JWT_SECRET"))
 
 	// Define the custom claims for the token
@@ -38,7 +38,7 @@ func GenerateJWT(user models.User, tokenType TokenType, expiration time.Duration
 * RefreshToken validates a refresh token and generates a new access token if
 * valid.
 **/
-func RefreshToken(refreshToken string, user models.User) (string, int, error) {
+func RefreshToken(refreshToken string, user models.Member) (string, int, error) {
 	// Parse the refresh token
 	token, err := jwt.Parse(refreshToken, func(token *jwt.Token) (interface{}, error) {
 		return []byte(os.Getenv("JWT_SECRET")), nil

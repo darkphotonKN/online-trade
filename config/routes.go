@@ -3,8 +3,8 @@ package config
 import (
 	"github.com/darkphotonKN/online-trade/internal/auth"
 	"github.com/darkphotonKN/online-trade/internal/item"
+	"github.com/darkphotonKN/online-trade/internal/member"
 	"github.com/darkphotonKN/online-trade/internal/rating"
-	"github.com/darkphotonKN/online-trade/internal/user"
 	"github.com/gin-gonic/gin"
 )
 
@@ -23,18 +23,18 @@ func SetupRouter() *gin.Engine {
 	ratingRepo := rating.NewRatingRepository(DB)
 	ratingService := rating.NewRatingService(ratingRepo)
 
-	// -- USER --
+	// -- MEMBER --
 
-	// --- User Setup ---
-	userRepo := user.NewUserRepository(DB)
-	userService := user.NewUserService(userRepo)
-	userHandler := user.NewUserHandler(userService, ratingService)
+	// --- Member Setup ---
+	memberRepo := member.NewMemberRepository(DB)
+	memberService := member.NewMemberService(memberRepo)
+	memberHandler := member.NewMemberHandler(memberService, ratingService)
 
-	// --- User Routes ---
-	userRoutes := api.Group("/user")
-	userRoutes.GET("/:id", userHandler.GetUserByIdHandler)
-	userRoutes.POST("/signup", userHandler.CreateUserHandler)
-	userRoutes.POST("/signin", userHandler.LoginUserHandler)
+	// --- Member Routes ---
+	memberRoutes := api.Group("/member")
+	memberRoutes.GET("/:id", memberHandler.GetMemberByIdHandler)
+	memberRoutes.POST("/signup", memberHandler.CreateMemberHandler)
+	memberRoutes.POST("/signin", memberHandler.LoginMemberHandler)
 
 	// -- ITEM --
 
